@@ -1,4 +1,4 @@
-package test_test
+package test
 
 import (
 	"smalldoc124/service/internal/product"
