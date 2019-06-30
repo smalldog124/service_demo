@@ -18,3 +18,11 @@ services:
     restart: always
     ports:
       - 8080:8080
+
+  application:
+    container_name: sales-api
+    image: sales-api:latest
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
