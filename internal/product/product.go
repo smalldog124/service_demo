@@ -20,11 +20,21 @@ func CreateNewProduct(db *sqlx.DB, newProduct NewProduct, now time.Time) (Produc
 		DateUpdated: now.UTC(),
 	}
 
-	const query = `INSERT INTO products (id,name, price, amount, date_created, date_updated)VALUES ($1, $2, $3, $4, $5, $6)`
+	const query = `INSERT INTO products (product_id,name, price, amount, date_created, date_updated)VALUES ($1, $2, $3, $4, $5, $6)`
 	tx := db.MustBegin()
 	tx.MustExec(query, product.ID, product.Name, product.Price, product.Amount, product.DateCreated, product.DateUpdated)
 	if err := tx.Commit(); err != nil {
 		return Product{}, err
+	}
+	return product, nil
+}
+
+func ListProduct(db *sqlx.DB) ([]Product, error) {
+	var product []Product
+	const query = `SELECT product_id,name, price, amount, date_created, date_updated FROM products`
+	err := db.Select(&product, query)
+	if err != nil {
+		return []Product{}, err
 	}
 	return product, nil
 }

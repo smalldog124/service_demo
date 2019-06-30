@@ -27,14 +27,14 @@ func Test_ProductDB(t *testing.T) {
 
 	schema := `
 	CREATE TABLE products (
-		id   TEXT,
+		product_id   TEXT,
 		name         TEXT,
 		price         DECIMAL,
 		amount     INT,
 		date_created TIMESTAMP,
 		date_updated TIMESTAMP,
 	
-		PRIMARY KEY (id)
+		PRIMARY KEY (product_id)
 	);
 	`
 	resual, err := database.NewTable(db, schema)
@@ -60,6 +60,24 @@ func Test_ProductDB(t *testing.T) {
 		}
 
 		actual, err := product.CreateNewProduct(db, newProduct, now)
+
+		assert.Equal(t, nil, err)
+		assert.Equal(t, expeted, actual)
+	})
+	t.Run("List All Product", func(t *testing.T) {
+		now := time.Date(2019, time.June, 1, 0, 0, 0, 0, time.UTC)
+		expeted := []product.Product{
+			{
+				ID:          "1",
+				Name:        "google pixel 3",
+				Price:       22900.00,
+				Amount:      3,
+				DateCreated: now,
+				DateUpdated: now,
+			},
+		}
+
+		actual, err := product.ListProduct(db)
 
 		assert.Equal(t, nil, err)
 		assert.Equal(t, expeted, actual)
