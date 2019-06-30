@@ -7,8 +7,8 @@ import (
 )
 
 type ProductDB interface {
-	GetProductByID(db *sqlx.DB, id string) (Product, error)
-	CreateNewProduct(db *sqlx.DB, newProduct NewProduct, now time.Time) (Product, error)
+	GetProductByID(id string) (Product, error)
+	CreateNewProduct(newProduct NewProduct, now time.Time) (Product, error)
 }
 
 type PostgresDB struct {

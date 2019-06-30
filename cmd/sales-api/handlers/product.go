@@ -24,7 +24,7 @@ func (prod Product) CreateNewProduct(context *gin.Context) {
 		context.Status(http.StatusBadRequest)
 		return
 	}
-	newItemp, err := prod.ProductDB.CreateNewProduct(prod.DB, newProduct, time.Now())
+	newItemp, err := prod.ProductDB.CreateNewProduct(newProduct, time.Now())
 	if err != nil {
 		log.Println("Handlers CreateNewProduct error: ", err)
 		context.Status(http.StatusInternalServerError)
@@ -37,7 +37,7 @@ func (prod Product) CreateNewProduct(context *gin.Context) {
 func (prod Product) GetProductByID(context *gin.Context) {
 	productID := context.Param("id")
 
-	product, err := prod.ProductDB.GetProductByID(prod.DB, productID)
+	product, err := prod.ProductDB.GetProductByID(productID)
 	if err != nil {
 		log.Println("Handlers GetProductByID error: ", err)
 		context.Status(http.StatusInternalServerError)
