@@ -36,5 +36,21 @@ func ListProduct(db *sqlx.DB) ([]Product, error) {
 	if err != nil {
 		return []Product{}, err
 	}
+	for index, prod := range product {
+		product[index].DateCreated = prod.DateCreated.UTC()
+		product[index].DateUpdated = prod.DateUpdated.UTC()
+	}
+	return product, nil
+}
+
+func GetProductByID(db *sqlx.DB, id string) (Product, error) {
+	var product Product
+	const query = `SELECT product_id,name, price, amount, date_created, date_updated FROM products WHERE product_id=$1`
+	err := db.Get(&product, query, id)
+	if err != nil {
+		return Product{}, err
+	}
+	product.DateCreated = product.DateCreated.UTC()
+	product.DateUpdated = product.DateUpdated.UTC()
 	return product, nil
 }

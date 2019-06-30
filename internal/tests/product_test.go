@@ -82,6 +82,21 @@ func Test_ProductDB(t *testing.T) {
 		assert.Equal(t, nil, err)
 		assert.Equal(t, expeted, actual)
 	})
+	t.Run("Get Product By ID", func(t *testing.T) {
+		now := time.Date(2019, time.June, 1, 0, 0, 0, 0, time.UTC)
+		expeted := product.Product{
+			ID:          "1",
+			Name:        "google pixel 3",
+			Price:       22900.00,
+			Amount:      3,
+			DateCreated: now,
+			DateUpdated: now,
+		}
+
+		actual, err := product.GetProductByID(db, "1")
+		assert.Equal(t, nil, err)
+		assert.Equal(t, expeted, actual)
+	})
 	resual, err = database.DropTable(db, "products")
 	if err != nil {
 		t.Log("ceate tabel error: ", err)
