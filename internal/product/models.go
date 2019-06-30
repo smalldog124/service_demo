@@ -18,3 +18,9 @@ type NewProduct struct {
 	Price  float64 `json:"price"`
 	Amount int     `json:"amount"`
 }
+
+type UpdateProduct struct {
+	Name   *string  `json:"name"`
+	Price  *float64 `json:"price"`
+	Amount *int     `json:"amount"`
+}
