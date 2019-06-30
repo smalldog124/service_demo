@@ -24,3 +24,12 @@ func Open(cfg Config) (*sqlx.DB, error) {
 	var dataSoruce = fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", cfg.Host, cfg.Port, cfg.User, cfg.Password, cfg.Name, sslmode)
 	return sqlx.Connect("postgres", dataSoruce)
 }
+
+func NewTable(db *sqlx.DB, schema string) (int64, error) {
+	return db.MustExec(schema).RowsAffected()
+}
+
+func DropTable(db *sqlx.DB, tableName string) (int64, error) {
+	schema := fmt.Sprintf("DROP TABLE %s;", tableName)
+	return db.MustExec(schema).RowsAffected()
+}
