@@ -43,6 +43,9 @@ func Test_ProductDB(t *testing.T) {
 
 	}
 	t.Log(resual)
+	postgresDB := product.PostgresDB{
+		DB: db,
+	}
 	t.Run("Create New Product", func(t *testing.T) {
 		now := time.Date(2019, time.June, 1, 0, 0, 0, 0, time.UTC)
 		expeted := product.Product{
@@ -59,7 +62,7 @@ func Test_ProductDB(t *testing.T) {
 			Amount: 3,
 		}
 
-		actual, err := product.CreateNewProduct(db, newProduct, now)
+		actual, err := postgresDB.CreateNewProduct(newProduct, now)
 
 		assert.Equal(t, nil, err)
 		assert.Equal(t, expeted, actual)
@@ -77,7 +80,7 @@ func Test_ProductDB(t *testing.T) {
 			},
 		}
 
-		actual, err := product.ListProduct(db)
+		actual, err := postgresDB.ListProduct()
 
 		assert.Equal(t, nil, err)
 		assert.Equal(t, expeted, actual)
@@ -93,7 +96,7 @@ func Test_ProductDB(t *testing.T) {
 			DateUpdated: now,
 		}
 
-		actual, err := product.GetProductByID(db, "1")
+		actual, err := postgresDB.GetProductByID("1")
 		assert.Equal(t, nil, err)
 		assert.Equal(t, expeted, actual)
 	})
@@ -103,7 +106,7 @@ func Test_ProductDB(t *testing.T) {
 			Price: Float64Pointer(2300.00),
 		}
 
-		err := product.Update(db, "1", prod, now)
+		err := postgresDB.Update("1", prod, now)
 		assert.Equal(t, nil, err)
 	})
 	resual, err = database.DropTable(db, "products")
