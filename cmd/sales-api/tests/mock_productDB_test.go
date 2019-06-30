@@ -12,7 +12,7 @@ type mockDBProduct struct {
 	mock.Mock
 }
 
-func (dbProduct *mockDBProduct) GetProductByID(id string, db *sqlx.DB) (product.Product, error) {
-	argument := dbProduct.Called(id, db)
+func (dbProduct *mockDBProduct) GetProductByID(db *sqlx.DB, id string) (product.Product, error) {
+	argument := dbProduct.Called(db, id)
 	return argument.Get(0).(product.Product), argument.Error(1)
 }

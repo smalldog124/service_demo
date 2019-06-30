@@ -7,7 +7,7 @@ import (
 )
 
 type ProductDB interface {
-	GetProductByID(id string, db *sqlx.DB) (Product, error)
+	GetProductByID(db *sqlx.DB, id string) (Product, error)
 }
 
 func CreateNewProduct(db *sqlx.DB, newProduct NewProduct, now time.Time) (Product, error) {

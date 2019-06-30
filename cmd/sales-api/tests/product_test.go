@@ -20,7 +20,7 @@ func Test_GetProductByID_Input_ID_1_Should_Mobile_Phone(t *testing.T) {
 	request := httptest.NewRequest("GET", "/v1/product/1", nil)
 	writer := httptest.NewRecorder()
 	mockDBProductDB := new(mockDBProduct)
-	mockDBProductDB.On("GetProductByID", "1",mock.Anything).Return(product.Product{ID: "1", Name: "sony xperia", Price: 9999.00, Amount: 5}, nil)
+	mockDBProductDB.On("GetProductByID",mock.Anything,"1").Return(product.Product{ID: "1", Name: "sony xperia", Price: 9999.00, Amount: 5}, nil)
 	product := handlers.Product{
 		DB:&sqlx.DB{},
 		ProductDB: mockDBProductDB,

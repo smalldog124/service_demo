@@ -18,7 +18,7 @@ type Product struct {
 func (prod Product) GetProductByID(context *gin.Context) {
 	productID := context.Param("id")
 
-	product, err := prod.ProductDB.GetProductByID(productID, prod.DB)
+	product, err := prod.ProductDB.GetProductByID(prod.DB, productID)
 	if err != nil {
 		log.Println("Handlers GetProductByID error: ", err)
 		context.Status(http.StatusInternalServerError)
