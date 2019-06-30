@@ -97,10 +97,23 @@ func Test_ProductDB(t *testing.T) {
 		assert.Equal(t, nil, err)
 		assert.Equal(t, expeted, actual)
 	})
+	t.Run("Update Product", func(t *testing.T) {
+		now := time.Date(2019, time.June, 1, 0, 0, 0, 0, time.UTC)
+		prod := product.UpdateProduct{
+			Price: Float64Pointer(2300.00),
+		}
+
+		err := product.Update(db, "1", prod, now)
+		assert.Equal(t, nil, err)
+	})
 	resual, err = database.DropTable(db, "products")
 	if err != nil {
 		t.Log("ceate tabel error: ", err)
 
 	}
 	t.Log(resual)
+}
+
+func Float64Pointer(f float64) *float64 {
+	return &f
 }

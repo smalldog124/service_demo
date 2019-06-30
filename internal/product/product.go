@@ -54,3 +54,28 @@ func GetProductByID(db *sqlx.DB, id string) (Product, error) {
 	product.DateUpdated = product.DateUpdated.UTC()
 	return product, nil
 }
+
+func Update(db *sqlx.DB, id string, update UpdateProduct, now time.Time) error {
+	product, err := GetProductByID(db, id)
+	if err != nil {
+		return err
+	}
+
+	if update.Name != nil {
+		product.Name = *update.Name
+	}
+	if update.Price != nil {
+		product.Price = *update.Price
+	}
+	if update.Amount != nil {
+		product.Amount = *update.Amount
+	}
+	product.DateUpdated = now
+	const query = `UPDATE products SET "name" = $2, "price" = $3, "amount" = $4, "date_updated" = $5 WHERE product_id=$1`
+	tx := db.MustBegin()
+	tx.MustExec(query, product.ID, product.Name, product.Price, product.Amount, product.DateUpdated)
+	if err := tx.Commit(); err != nil {
+		return err
+	}
+	return nil
+}
