@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+
+  db:
+    container_name: db
+    image: postgres:11.1-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: smalldoc
+    ports:
+      - 5432:5432
+
+  adminer:
+    container_name: admin_db
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
