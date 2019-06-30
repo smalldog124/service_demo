@@ -11,6 +11,8 @@ services:
       POSTGRES_USER: smalldoc
     ports:
       - 5432:5432
+    volumes:
+      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
 
   adminer:
     container_name: admin_db
@@ -19,10 +21,10 @@ services:
     ports:
       - 8080:8080
 
-  application:
-    container_name: sales-api
-    image: sales-api:latest
-    depends_on:
-      - db
-    ports:
-      - 3000:3000
+  # application:
+  #   container_name: sales-api
+  #   image: sales-api:latest
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - 3000:3000
